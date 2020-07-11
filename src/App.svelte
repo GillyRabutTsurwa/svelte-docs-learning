@@ -1,24 +1,13 @@
 <script>
   let title = "Reactivity";
   let titre = "Réactivité";
-  let count = 0;
-  function handleClick() {
-    count += 1;
-  }
-  $: doubleCount = count * 2;
+  let numbers = [1, 2, 3, 4, 5];
   //NEW:
-  $: console.log(`The count is ${count}`);
-  //NEW:
-  $: {
-    console.log(`La valeur actuelle de count est ${count}`);
-    console.log(`J'aime le Svelte. J'apprends la ${titre}`);
+  function addNumber() {
+    numbers = [...numbers, numbers.length + 1];
   }
-  //NEW:
-  $: {
-    if (count > 10) {
-      console.log("Woah. Coo down the pace");
-    }
-  }
+  $: console.log(numbers);
+  $: sum = numbers.reduce((acc, currentNum) => acc + currentNum, 0);
 </script>
 
 <style>
@@ -49,33 +38,17 @@
 <main>
   <h1>{title}</h1>
   <div class="docs-read">
+    <div class="code">
+      <button on:click={addNumber}>Add Number</button>
+      <p>{numbers.join(' + ')} = {sum}</p>
+    </div>
     <p>
-      Svelte automatically updates the DOM when your component's state changes.
-      Often, some parts of a component's state need to be computed from other
-      parts (such as a fullname derived from a firstname and a lastname), and
-      recomputed whenever they change. For these, we have reactive declarations.
-    </p>
-    <p>
-      We're not limited to declaring reactive values — we can also run arbitrary
-      statements reactively. For example, we can log the value of count (the
-      variable we have been working with till now) whenever it changes:
-    </p>
-    <p>Additionally, we can easily group statements together with a block</p>
-    <p>We can also use $: to make if statements (for example) reactive.</p>
-    <p>
-      $: is very powerful. Et en apprenant de cette symbol je me trouve
-      d'apprécier de plus en plus le property "computed" en Vue
+      S'il te faut refraîchir la tête au sujet, consulter ce lien:
+      <a
+        href="https://svelte.dev/tutorial/updating-arrays-and-objects"
+        target="_blank">
+        Svelte tutorial
+      </a>
     </p>
   </div>
-  <div class="code">
-    <button on:click={handleClick}>
-      Clicked {count} {count === 1 ? 'Time' : 'Times'}
-    </button>
-    <p>{count} doubled is {doubleCount}</p>
-  </div>
-  <p>
-    Visit the
-    <a href="https://svelte.dev/tutorial">Svelte tutorial</a>
-    to learn how to build Svelte apps.
-  </p>
 </main>
