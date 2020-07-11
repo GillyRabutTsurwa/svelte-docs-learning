@@ -1,20 +1,19 @@
 <script>
-  export let name;
+  let title = "Reactivity";
+  let count = 0;
+  //NEW:
+  function handleClick() {
+    count += 1;
+  }
 </script>
 
 <style>
-  main {
-    text-align: center;
-    padding: 1em;
-    max-width: 240px;
-    margin: 0 auto;
-  }
-
   h1 {
     color: #ff3e00;
     text-transform: uppercase;
     font-size: 4em;
     font-weight: 100;
+    text-align: center;
   }
 
   @media (min-width: 640px) {
@@ -22,25 +21,25 @@
       max-width: none;
     }
   }
+
+  button {
+    cursor: pointer;
+  }
 </style>
 
 <main>
-  <h1>Hello {name}!</h1>
+  <h1>{title}</h1>
+  <div class="docs-read">
+    At the heart of Svelte is a powerful system of reactivity for keeping the
+    DOM in sync with your application state — for example, in response to an
+    event.
+  </div>
+  <div class="code">
+    <button on:click={handleClick}>Clicked {count} Times</button>
+  </div>
   <p>
     Visit the
     <a href="https://svelte.dev/tutorial">Svelte tutorial</a>
     to learn how to build Svelte apps.
   </p>
-  <p>
-    Pour cette première partie, j'écris pas de code. Néanmoins, voici ce qu'il
-    est couvert
-  </p>
-  <ul>
-    <li>Adding Data</li>
-    <li>Dynamic Attributes</li>
-    <li>Styling</li>
-    <li>Nested Components</li>
-    <li>HTML Tags</li>
-    <li>Making an App (Optional to review)</li>
-  </ul>
 </main>
