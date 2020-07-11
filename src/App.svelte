@@ -50,6 +50,8 @@
   <div class="code">
     <button on:click={generateRandomNumber}>Randomise Answer</button>
     <Nested answer={numRando} />
+    <!-- NOTE: Pay attention to the value of answer on BELOW nested component -->
+    <Nested />
   </div>
   <p>
     S'il te faut refraîchir la tête au sujet, consulter ce lien:
