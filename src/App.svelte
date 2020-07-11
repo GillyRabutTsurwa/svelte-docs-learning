@@ -1,13 +1,13 @@
 <script>
-  let title = "Reactivity";
-  let titre = "Réactivité";
-  let numbers = [1, 2, 3, 4, 5];
-  //NEW:
-  function addNumber() {
-    numbers = [...numbers, numbers.length + 1];
+  // NEW:
+  import Nested from "./components/Nested.svelte";
+
+  let title = "Props";
+  let numRando = 0;
+
+  function generateRandomNumber() {
+    numRando = Math.floor(Math.random() * 200);
   }
-  $: console.log(numbers);
-  $: sum = numbers.reduce((acc, currentNum) => acc + currentNum, 0);
 </script>
 
 <style>
@@ -38,17 +38,23 @@
 <main>
   <h1>{title}</h1>
   <div class="docs-read">
-    <div class="code">
-      <button on:click={addNumber}>Add Number</button>
-      <p>{numbers.join(' + ')} = {sum}</p>
-    </div>
     <p>
-      S'il te faut refraîchir la tête au sujet, consulter ce lien:
-      <a
-        href="https://svelte.dev/tutorial/updating-arrays-and-objects"
-        target="_blank">
-        Svelte tutorial
-      </a>
+      So far, we've dealt exclusively with internal state — that is to say, the
+      values are only accessible within a given component. In any real
+      application, you'll need to pass data from one component down to its
+      children. To do that, we need to declare properties, generally shortened
+      to 'props'. In Svelte, we do that with the export keyword. Edit the
+      Nested.svelte component:
     </p>
   </div>
+  <div class="code">
+    <button on:click={generateRandomNumber}>Randomise Answer</button>
+    <Nested answer={numRando} />
+  </div>
+  <p>
+    S'il te faut refraîchir la tête au sujet, consulter ce lien:
+    <a href="https://svelte.dev/tutorial/declaring-props" target="_blank">
+      Svelte tutorial
+    </a>
+  </p>
 </main>
