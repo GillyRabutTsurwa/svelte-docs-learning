@@ -1,11 +1,24 @@
 <script>
   let title = "Reactivity";
+  let titre = "Réactivité";
   let count = 0;
   function handleClick() {
     count += 1;
   }
-  //NEW:
   $: doubleCount = count * 2;
+  //NEW:
+  $: console.log(`The count is ${count}`);
+  //NEW:
+  $: {
+    console.log(`La valeur actuelle de count est ${count}`);
+    console.log(`J'aime le Svelte. J'apprends la ${titre}`);
+  }
+  //NEW:
+  $: {
+    if (count > 10) {
+      console.log("Woah. Coo down the pace");
+    }
+  }
 </script>
 
 <style>
@@ -43,17 +56,15 @@
       recomputed whenever they change. For these, we have reactive declarations.
     </p>
     <p>
-      When assigning reactive declarations, Svelte interprets the code to mean,
-      <strong>
-        "re-run this code whenever any of the referenced values change"
-      </strong>
-      . This is very similar to the computed property in Vue.
+      We're not limited to declaring reactive values — we can also run arbitrary
+      statements reactively. For example, we can log the value of count (the
+      variable we have been working with till now) whenever it changes:
     </p>
+    <p>Additionally, we can easily group statements together with a block</p>
+    <p>We can also use $: to make if statements (for example) reactive.</p>
     <p>
-      Although reactive values are optional, because you can just change the
-      values in the HTML markup, they become particularly valuable when you need
-      to reference them multiple times, or you have values that depend on other
-      reactive values.
+      $: is very powerful. Et en apprenant de cette symbol je me trouve
+      d'apprécier de plus en plus le property "computed" en Vue
     </p>
   </div>
   <div class="code">
