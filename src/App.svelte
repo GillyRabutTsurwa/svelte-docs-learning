@@ -1,22 +1,24 @@
 <script>
-  import Thing from "./components/Thing.svelte";
+  let title = "Promises With Await Blocks";
 
-  let things = [
-    { id: 1, colour: "#0d0887" },
-    { id: 2, colour: "#6a00a8" },
-    { id: 3, colour: "#b12a90" },
-    { id: 4, colour: "#e16462" },
-    { id: 5, colour: "#fca636" }
-  ];
-
-  function handleClick() {
-    things = things.slice(1);
+  async function fetchGoodBois() {
+    try {
+      const response = await fetch("https://dog.ceo/api/breeds/image/random");
+      const data = await response.json();
+      console.log(data);
+      console.log(`Promise Status: ${data.status}`);
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
   }
 
-  let title = "Keyed Each Blocks";
+  let myPromise = fetchGoodBois();
 
-  //TESTING:
-  $: console.log(things);
+  function handeClick() {
+    // Still don't understand why we need this line as well as the same one above. Mais sans les deux, ça marche pas. J'ai testé. En tout cas, J'aime ce que j'ai appris.
+    myPromise = fetchGoodBois();
+  }
 </script>
 
 <style>
@@ -33,6 +35,16 @@
     text-align: center;
   }
 
+  .promise-container {
+    width: 300px;
+    height: 300px;
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+  }
+
   @media (min-width: 640px) {
     main {
       max-width: none;
@@ -46,28 +58,20 @@
 
 <main>
   <h1>{title}</h1>
-  <div class="docs-read">
-    <p>
-      Just like in Vue and React, it is recommended to insert a unique key into
-      our iterations. Not doing so won't break the app, but could lead to
-      unexpected behaviours. Especially when manipulating data.
-    </p>
-    <p>
-      <strong>
-        We make a key by putting the value of the key in parantheses in our each
-        block.
-      </strong>
-    </p>
-  </div>
+  <div class="docs-read" />
 
-  <div class="code">
-    <button on:click={handleClick}>Remove first thing</button>
-    {#each things as currentThing (currentThing.id)}
-      <Thing current={currentThing.colour} />
-    {/each}
-  </div>
+  <div class="code" />
+  <button on:click={handeClick}>Fetch Data</button>
 
-  <!-- Try removing them by removing the key declaraion. The behaviour is bizzare. Je peux pas l'expliquer. -->
+  <div class="promise-container">
+    {#await myPromise}
+      <p>Loading good boys...</p>
+    {:then promiseData}
+      <img src={promiseData.message} alt="Dog" />
+    {:catch error}
+      <strong>There was an error</strong>
+    {/await}
+  </div>
 
   <p>
     S'il te faut refraîchir la tête au sujet, consulter ce lien:
