@@ -39,25 +39,23 @@
   <h1>{title}</h1>
   <div class="docs-read">
     <p>
-      Svelte has a really good way of rendering components conditionally. Pay
-      attention to the syntaxe. Very different from VueJS v-if syntaxe and React
-      JSX syntaxe.
+      We are improving the code from the last branch by adding
+      <strong>else blocks</strong>
+      . Pree straightforward.
     </p>
   </div>
   <div class="code">
-    <!-- We wrap our comment in an if block -->
+    <!-- Instead of writing two separate if statements like we did in the last branch, we can simple chain them using an else block -->
     {#if user.isLoggedIn}
       <button on:click={toggle}>Logged In</button>
-    {/if}
-
-    {#if !user.isLoggedIn}
+    {:else}
       <button on:click={toggle}>Logged Out</button>
     {/if}
   </div>
 
   <p>
     S'il te faut refraîchir la tête au sujet, consulter ce lien:
-    <a href="https://svelte.dev/tutorial/if-blocks" target="_blank">
+    <a href="https://svelte.dev/tutorial/else-blocks" target="_blank">
       Svelte tutorial
     </a>
   </p>
