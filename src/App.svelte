@@ -1,13 +1,10 @@
 <script>
   let title = "If Blocks";
 
-  let user = {
-    isLoggedIn: false
-  };
+  let x = 7;
 
-  function toggle() {
-    user.isLoggedIn = !user.isLoggedIn;
-  }
+  const increment = () => x++;
+  const decrement = () => x--;
 </script>
 
 <style>
@@ -39,23 +36,27 @@
   <h1>{title}</h1>
   <div class="docs-read">
     <p>
-      We are improving the code from the last branch by adding
-      <strong>else blocks</strong>
-      . Pree straightforward.
+      For mote than two statements, we use
+      <strong>else-if blocks</strong>
+      . This is also much better than nesting if-statements.
     </p>
   </div>
   <div class="code">
-    <!-- Instead of writing two separate if statements like we did in the last branch, we can simple chain them using an else block -->
-    {#if user.isLoggedIn}
-      <button on:click={toggle}>Logged In</button>
+    <!-- If we have more than two statements, we can chain those with else-if blocks. All this is just like regular Javascript. Just different syntaxe -->
+    <button on:click={increment}>Increment</button>
+    <button on:click={decrement}>Decrement</button>
+    {#if x > 10}
+      <p>{x} is greater than 10</p>
+    {:else if x < 5}
+      <p>{x} is less than 5</p>
     {:else}
-      <button on:click={toggle}>Logged Out</button>
+      <p>{x} is between 5 and 10</p>
     {/if}
   </div>
 
   <p>
     S'il te faut refraîchir la tête au sujet, consulter ce lien:
-    <a href="https://svelte.dev/tutorial/else-blocks" target="_blank">
+    <a href="https://svelte.dev/tutorial/else-if-blocks" target="_blank">
       Svelte tutorial
     </a>
   </p>
