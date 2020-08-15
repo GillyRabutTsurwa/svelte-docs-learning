@@ -1,10 +1,11 @@
 <script>
-  let title = "If Blocks";
+  let title = "Looping with Each Blocks";
 
-  let x = 7;
-
-  const increment = () => x++;
-  const decrement = () => x--;
+  let cats = [
+    { id: "J---aiyznGQ", name: "Keyboard Cat" },
+    { id: "z_AbfPXTKms", name: "Maru" },
+    { id: "OUtn3pvWmpg", name: "Henri The Existential Cat" }
+  ];
 </script>
 
 <style>
@@ -36,23 +37,27 @@
   <h1>{title}</h1>
   <div class="docs-read">
     <p>
-      For mote than two statements, we use
-      <strong>else-if blocks</strong>
-      . This is also much better than nesting if-statements.
+      If you need to loop over lists of data, use an
+      <strong>each block</strong>
+      . You can get the current index as a second argument, like so
     </p>
   </div>
+
   <div class="code">
-    <!-- If we have more than two statements, we can chain those with else-if blocks. All this is just like regular Javascript. Just different syntaxe -->
-    <button on:click={increment}>Increment</button>
-    <button on:click={decrement}>Decrement</button>
-    {#if x > 10}
-      <p>{x} is greater than 10</p>
-    {:else if x < 5}
-      <p>{x} is less than 5</p>
-    {:else}
-      <p>{x} is between 5 and 10</p>
-    {/if}
+    <ul>
+      {#each cats as currentCat, index}
+        <li>
+          <a
+            href="https://www.youtube.com/watch?v={currentCat.id}"
+            target="_blank">
+            {index + 1}: {currentCat.name}
+          </a>
+        </li>
+      {/each}
+    </ul>
   </div>
+
+  <!-- small NOTE: not relevant to the topic. But interesting how we don't have to use string interpolation or template literals, or even binding for the href attribute above. We just our brackets as usual and our data, and it works. Maybe I'm missing something.. Either way, keep this in mind. -->
 
   <p>
     S'il te faut refraîchir la tête au sujet, consulter ce lien:
