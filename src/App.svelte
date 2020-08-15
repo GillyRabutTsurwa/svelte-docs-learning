@@ -1,14 +1,13 @@
 <script>
-  import Info from "./components/Info.svelte";
+  let title = "If Blocks";
 
-  let title = "Props";
-
-  const pkg = {
-    name: "Svelte",
-    version: 3,
-    speed: "blazing",
-    website: "https://svelte.dev"
+  let user = {
+    isLoggedIn: false
   };
+
+  function toggle() {
+    user.isLoggedIn = !user.isLoggedIn;
+  }
 </script>
 
 <style>
@@ -40,27 +39,25 @@
   <h1>{title}</h1>
   <div class="docs-read">
     <p>
-      If you have an object of properties, you can 'spread' them on to a
-      component instead of specifying each one:
+      Svelte has a really good way of rendering components conditionally. Pay
+      attention to the syntaxe. Very different from VueJS v-if syntaxe and React
+      JSX syntaxe.
     </p>
   </div>
   <div class="code">
-    <!-- This first rendered child component is WITHOUT using spread -->
-    <Info
-      name={pkg.name}
-      version={pkg.version}
-      speed={pkg.speed}
-      website={pkg.website} />
-    <!-- NEW: This first rendered child component is WITH using spread -->
-    <!-- I think I understand -->
-    <!-- Under the hood, when we declare a props using an object. The name of the prop taken in by the child MUST be the same name of the property of the object (Look at object up at line 6). Svelte then recognises this. -->
-    <!-- Still don't understand fully but for now, ça suffit. -->
-    <Info {...pkg} />
+    <!-- We wrap our comment in an if block -->
+    {#if user.isLoggedIn}
+      <button on:click={toggle}>Logged In</button>
+    {/if}
+
+    {#if !user.isLoggedIn}
+      <button on:click={toggle}>Logged Out</button>
+    {/if}
   </div>
 
   <p>
     S'il te faut refraîchir la tête au sujet, consulter ce lien:
-    <a href="https://svelte.dev/tutorial/spread-props" target="_blank">
+    <a href="https://svelte.dev/tutorial/if-blocks" target="_blank">
       Svelte tutorial
     </a>
   </p>
