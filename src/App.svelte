@@ -1,23 +1,35 @@
 <script>
-  let title = "Promises With Await Blocks";
+  let title = "DOM Events";
+  let coordinates = {
+    x1: 0,
+    x2: 0,
+    y1: 0,
+    y2: 0
+  };
 
-  async function fetchGoodBois() {
-    try {
-      const response = await fetch("https://dog.ceo/api/breeds/image/random");
-      const data = await response.json();
-      console.log(data);
-      console.log(`Promise Status: ${data.status}`);
-      return data;
-    } catch (error) {
-      console.log(error);
-    }
+  // THIS DOES NOT WORK. No access to the document tree for some reason here. but inside the javascript function it works well
+  let pageText = document.querySelectorAll(".texto");
+
+  // we have access to the event object in svelte
+  function handleMouseMove(e) {
+    coordinates.x1 = e.clientX;
+    coordinates.y1 = e.clientY;
+
+    coordinates.x2 = e.screenX;
+    coordinates.y2 = e.screenY;
   }
 
-  let myPromise = fetchGoodBois();
+  function accessEventObject(e) {
+    console.log(e);
+  }
 
-  function handeClick() {
-    // Still don't understand why we need this line as well as the same one above. Mais sans les deux, ça marche pas. J'ai testé. En tout cas, J'aime ce que j'ai appris.
-    myPromise = fetchGoodBois();
+  function toggleColour() {
+    let pageText = document.querySelectorAll(".texto");
+    pageText.forEach(currentText => {
+      console.log(currentText);
+      console.dir(currentText);
+      currentText.classList.toggle("colourChange");
+    });
   }
 </script>
 
@@ -35,14 +47,14 @@
     text-align: center;
   }
 
-  .promise-container {
-    width: 300px;
-    height: 300px;
+  .code {
+    width: 100%;
+    height: 80vh;
+    border: 2.5px solid #ff3e00;
   }
 
-  img {
-    width: 100%;
-    height: 100%;
+  .colourChange {
+    color: indianred;
   }
 
   @media (min-width: 640px) {
@@ -50,32 +62,26 @@
       max-width: none;
     }
   }
-
-  button {
-    cursor: pointer;
-  }
 </style>
 
 <main>
   <h1>{title}</h1>
-  <div class="docs-read" />
-
-  <div class="code" />
-  <button on:click={handeClick}>Click 4 Random Dog</button>
-
-  <div class="promise-container">
-    <!-- Alors que l'on est en train d'accueilir nos données, "Loading good bois", s'affiche. myPromise contient une fonctionne qui consume une promesse. -->
-    {#await myPromise}
-      <p>Loading good bois...</p>
-      <!-- NOTEIMPORTANT: promiseData est la valeur qui renvoie notre fonction. (Ligne 10). -->
-      <!-- Après que nos données sont accueillies, on va rendre une image aléatoire d'un chien -->
-    {:then promiseData}
-      <img src={promiseData.message} alt="Dog" />
-    {:catch error}
-      <!-- Mais si une erreur s'est produite, on va afficher "There was an error" -->
-      <strong>There was an error</strong>
-    {/await}
+  <div class="docs-read">
+    As we've briefly seen already, you can listen to any event on an element
+    with the on: directive:
   </div>
+
+  <div on:mousemove={handleMouseMove} class="code">
+    <p class="texto">
+      The mouse position (client) is {coordinates.x1} x {coordinates.y1}
+    </p>
+    <p class="texto">
+      The mouse position (screen) is {coordinates.x2} x {coordinates.y2}
+    </p>
+  </div>
+
+  <button on:click={accessEventObject} class="btn">Event Object Info</button>
+  <button on:click={toggleColour} class="btn">Toggle Colour</button>
 
   <p>
     S'il te faut refraîchir la tête au sujet, consulter ce lien:
