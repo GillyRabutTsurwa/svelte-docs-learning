@@ -67,6 +67,7 @@
     <!-- Alors que l'on est en train d'accueilir nos données, "Loading good bois", s'affiche. myPromise contient une fonctionne qui consume une promesse. -->
     {#await myPromise}
       <p>Loading good bois...</p>
+      <!-- NOTEIMPORTANT: promiseData est la valeur qui renvoie notre fonction. (Ligne 10). -->
       <!-- Après que nos données sont accueillies, on va rendre une image aléatoire d'un chien -->
     {:then promiseData}
       <img src={promiseData.message} alt="Dog" />
