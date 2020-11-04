@@ -61,14 +61,17 @@
   <div class="docs-read" />
 
   <div class="code" />
-  <button on:click={handeClick}>Fetch Data</button>
+  <button on:click={handeClick}>Click 4 Random Dog</button>
 
   <div class="promise-container">
+    <!-- Alors que l'on est en train d'accueilir nos données, "Loading good bois", s'affiche. myPromise contient une fonctionne qui consume une promesse. -->
     {#await myPromise}
-      <p>Loading good boys...</p>
+      <p>Loading good bois...</p>
+      <!-- Après que nos données sont accueillies, on va rendre une image aléatoire d'un chien -->
     {:then promiseData}
       <img src={promiseData.message} alt="Dog" />
     {:catch error}
+      <!-- Mais si une erreur s'est produite, on va afficher "There was an error" -->
       <strong>There was an error</strong>
     {/await}
   </div>
