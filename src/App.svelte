@@ -28,7 +28,7 @@
     pageText.forEach(currentText => {
       console.log(currentText);
       console.dir(currentText);
-      currentText.classList.toggle("colourChange");
+      currentText.classList.toggle("colour-change");
     });
   }
 </script>
@@ -53,14 +53,20 @@
     border: 2.5px solid #ff3e00;
   }
 
-  .colourChange {
-    color: indianred;
-  }
-
   @media (min-width: 640px) {
     main {
       max-width: none;
     }
+  }
+
+  /* TODO: Fait recherche à la raison que celui-ci marche pas: */
+  /* .colour-change {
+    color: magenta;
+  } */
+
+  /* Mais celui-ci marche bien */
+  :global(.colour-change) {
+    color: magenta;
   }
 </style>
 
