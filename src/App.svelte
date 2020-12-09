@@ -1,36 +1,23 @@
 <script>
   let title = "DOM Events";
   let coordinates = {
-    x1: 0,
-    x2: 0,
-    y1: 0,
-    y2: 0
+    x: 0,
+    y: 0
   };
 
-  // THIS DOES NOT WORK. No access to the document tree for some reason here. but inside the javascript function it works well
-  let pageText = document.querySelectorAll(".texto");
+  // replaced with inline handler
+  // function handleMouseMove(e) {
+  //   coordinates.x1 = e.clientX;
+  //   coordinates.y1 = e.clientY;
 
-  // we have access to the event object in svelte
-  function handleMouseMove(e) {
-    coordinates.x1 = e.clientX;
-    coordinates.y1 = e.clientY;
+  //   coordinates.x2 = e.screenX;
+  //   coordinates.y2 = e.screenY;
+  // }
 
-    coordinates.x2 = e.screenX;
-    coordinates.y2 = e.screenY;
-  }
-
-  function accessEventObject(e) {
-    console.log(e);
-  }
-
-  function toggleColour() {
-    let pageText = document.querySelectorAll(".texto");
-    pageText.forEach(currentText => {
-      console.log(currentText);
-      console.dir(currentText);
-      currentText.classList.toggle("colour-change");
-    });
-  }
+  // we have also replaced this function with an inline handler
+  // function accessEventObject(e) {
+  //   console.log(e);
+  // }
 </script>
 
 <style>
@@ -71,24 +58,21 @@
 </style>
 
 <main>
-  <h1>{title}</h1>
+  <h1 id="title">{title}</h1>
   <div class="docs-read">
     As we've briefly seen already, you can listen to any event on an element
     with the on: directive:
   </div>
 
-  <div on:mousemove={handleMouseMove} class="code">
+  <div
+    on:mousemove={e => (coordinates = { x: e.clientX, y: e.clientY })}
+    class="code">
     <p class="texto">
-      The mouse position (client) is {coordinates.x1} x {coordinates.y1}
-    </p>
-    <p class="texto">
-      The mouse position (screen) is {coordinates.x2} x {coordinates.y2}
+      The mouse position (client) is {coordinates.x} x {coordinates.y}
     </p>
   </div>
 
-  <button on:click={accessEventObject} class="btn">Event Object Info</button>
-  <button on:click={toggleColour} class="btn">Toggle Colour</button>
-
+  <button on:click={e => console.log(e)} class="btn">Event Object Info</button>
   <p>
     S'il te faut refraîchir la tête au sujet, consulter ce lien:
     <a href="https://svelte.dev/tutorial/keyed-each-blocks" target="_blank">
