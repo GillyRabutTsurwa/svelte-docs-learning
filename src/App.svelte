@@ -1,9 +1,6 @@
 <script>
-  let title = "DOM Events";
-  let coordinates = {
-    x: 0,
-    y: 0
-  };
+  let title = "Event Modifiers";
+  let name;
 
   // replaced with inline handler
   // function handleMouseMove(e) {
@@ -64,13 +61,16 @@
     with the on: directive:
   </div>
 
-  <div
-    on:mousemove={e => (coordinates = { x: e.clientX, y: e.clientY })}
-    class="code">
-    <p class="texto">
-      The mouse position (client) is {coordinates.x} x {coordinates.y}
-    </p>
-  </div>
+  <form on:submit|preventDefault>
+    <input
+      type="text"
+      name="message"
+      id="msg"
+      placeholder="Type a message"
+      bind:value={name} />
+    <input type="submit" value="Submit" />
+  </form>
+  <span>{name}</span>
 
   <button on:click={e => console.log(e)} class="btn">Event Object Info</button>
   <p>
