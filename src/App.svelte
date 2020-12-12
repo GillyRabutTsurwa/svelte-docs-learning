@@ -2,19 +2,14 @@
   let title = "Event Modifiers";
   let name;
 
-  // replaced with inline handler
-  // function handleMouseMove(e) {
-  //   coordinates.x1 = e.clientX;
-  //   coordinates.y1 = e.clientY;
+  function returnInputValue() {
+    const myInput = document.getElementById("msgInput");
+    if (myInput.value !== "") console.log(myInput.value);
+  }
 
-  //   coordinates.x2 = e.screenX;
-  //   coordinates.y2 = e.screenY;
-  // }
-
-  // we have also replaced this function with an inline handler
-  // function accessEventObject(e) {
-  //   console.log(e);
-  // }
+  function alertOnce() {
+    alert("Je vais plus m'afficher. Seule cette fois-ci");
+  }
 </script>
 
 <style>
@@ -61,18 +56,17 @@
     with the on: directive:
   </div>
 
-  <form on:submit|preventDefault>
+  <form id="myForm" on:submit|preventDefault={returnInputValue}>
     <input
       type="text"
       name="message"
-      id="msg"
-      placeholder="Type a message"
-      bind:value={name} />
+      id="msgInput"
+      placeholder="Type a message" />
     <input type="submit" value="Submit" />
   </form>
   <span>{name}</span>
 
-  <button on:click={e => console.log(e)} class="btn">Event Object Info</button>
+  <button on:click|once={alertOnce} class="btn">Click Me</button>
   <p>
     S'il te faut refraîchir la tête au sujet, consulter ce lien:
     <a href="https://svelte.dev/tutorial/keyed-each-blocks" target="_blank">
