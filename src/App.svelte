@@ -1,14 +1,17 @@
 <script>
-  let title = "Event Modifiers";
-  let name;
+  import Child from "./components/Child.svelte";
+  let title = "Component Events";
 
-  function returnInputValue() {
-    const myInput = document.getElementById("msgInput");
-    if (myInput.value !== "") console.log(myInput.value);
-  }
-
-  function alertOnce() {
-    alert("Je vais plus m'afficher. Seule cette fois-ci");
+  // here is the function that executes as a result of the parent (this App component) listening to the event by the child component. This function will take an event parametre (e), similar to vanilla Javascript, but not with the same properties.
+  // this e object contains two properties worth mentioning:
+  // e.type = the name of the event being passed (je sais pas lorsque l'on va l'utiliser)
+  // e.detail = the data passed on from the child.
+  function handleMessage(e) {
+    console.log(e);
+    const { type, detail } = e;
+    console.log(type);
+    console.log(detail);
+    console.log(detail.text);
   }
 </script>
 
@@ -38,11 +41,6 @@
     }
   }
 
-  /* TODO: Fait recherche à la raison que celui-ci marche pas: */
-  /* .colour-change {
-    color: magenta;
-  } */
-
   /* Mais celui-ci marche bien */
   :global(.colour-change) {
     color: magenta;
@@ -56,17 +54,8 @@
     with the on: directive:
   </div>
 
-  <form id="myForm" on:submit|preventDefault={returnInputValue}>
-    <input
-      type="text"
-      name="message"
-      id="msgInput"
-      placeholder="Type a message" />
-    <input type="submit" value="Submit" />
-  </form>
-  <span>{name}</span>
-
-  <button on:click|once={alertOnce} class="btn">Click Me</button>
+  <!-- NEW: on the declaration of the child component in the parent component is where we listen for our event from the child. also, we make a function to handle the event, and in which our data from the child (if there is any) can be accessed. L'idée est exactement pareil que celle de Vue, mais le syntaxe est un peu différent (mais pas trop) -->
+  <Child on:message={handleMessage} />
   <p>
     S'il te faut refraîchir la tête au sujet, consulter ce lien:
     <a href="https://svelte.dev/tutorial/keyed-each-blocks" target="_blank">
