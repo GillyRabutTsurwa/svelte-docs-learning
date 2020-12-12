@@ -1,14 +1,13 @@
 <script>
-  let title = "Event Modifiers";
-  let name;
+  import Liaison from "./components/Liaison.svelte";
+  let title = "Event Forwarding";
 
-  function returnInputValue() {
-    const myInput = document.getElementById("msgInput");
-    if (myInput.value !== "") console.log(myInput.value);
-  }
-
-  function alertOnce() {
-    alert("Je vais plus m'afficher. Seule cette fois-ci");
+  function handleMessage(e) {
+    console.log(e);
+    const { type, detail } = e;
+    console.log(type);
+    console.log(detail);
+    console.log(detail.text);
   }
 </script>
 
@@ -38,11 +37,6 @@
     }
   }
 
-  /* TODO: Fait recherche à la raison que celui-ci marche pas: */
-  /* .colour-change {
-    color: magenta;
-  } */
-
   /* Mais celui-ci marche bien */
   :global(.colour-change) {
     color: magenta;
@@ -56,17 +50,7 @@
     with the on: directive:
   </div>
 
-  <form id="myForm" on:submit|preventDefault={returnInputValue}>
-    <input
-      type="text"
-      name="message"
-      id="msgInput"
-      placeholder="Type a message" />
-    <input type="submit" value="Submit" />
-  </form>
-  <span>{name}</span>
-
-  <button on:click|once={alertOnce} class="btn">Click Me</button>
+  <Liaison on:message={handleMessage} />
   <p>
     S'il te faut refraîchir la tête au sujet, consulter ce lien:
     <a href="https://svelte.dev/tutorial/keyed-each-blocks" target="_blank">
