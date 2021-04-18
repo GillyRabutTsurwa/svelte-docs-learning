@@ -1,15 +1,13 @@
 <script>
-  import Liaison from "./components/Liaison.svelte";
-  let title = "Event Forwarding";
+  let title = "Binding"
+  let num1 = 1;
+  let num2 = 2;
 
-  function handleMessage(e) {
-    console.log(e);
-    const { type, detail } = e;
-    console.log(type);
-    console.log(detail);
-    console.log(detail.text);
-  }
+  //NOTE: still need to practise on how to use reactive values
+  $: sum = num1 + num2;
+
 </script>
+
 
 <style>
   main {
@@ -46,15 +44,31 @@
 <main>
   <h1 id="title">{title}</h1>
   <div class="docs-read">
-    As we've briefly seen already, you can listen to any event on an element
-    with the on: directive:
+    <p>
+      In the DOM, everything is a string. That's unhelpful when you're dealing with numeric inputs — type="number" and type="range" — as it means you have to remember to coerce input.value before using it.
+    </p>
+    <p>
+      With bind:value, Svelte takes care of it for you:
+    </p>       
+  </div>      
+
+  <div class="my-inputs">
+    <label>
+      <input type="number" bind:value={num1} min=0 max=20>
+      <input type="range" bind:value={num1} min=0 max=20>
+    </label>
+    <label>
+      <input type="number" bind:value={num2} min=0 max=20>
+      <input type="range" bind:value={num2} min=0 max=20>
+    </label>
   </div>
 
-  <Liaison on:message={handleMessage} />
+  <p> {num1} + {num2} = {sum} </p>
+
   <p>
     S'il te faut refraîchir la tête au sujet, consulter ce lien:
-    <a href="https://svelte.dev/tutorial/keyed-each-blocks" target="_blank">
+    <a href="https://svelte.dev/tutorial/text-inputs" target="_blank">
       Svelte tutorial
-    </a>
+    </a> 
   </p>
-</main>
+</main> 

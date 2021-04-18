@@ -1,1 +1,3 @@
-Instead of using functions for our DOM events, we will write inline event handlers. I don't prefer this, but it's okay to know it.
+Binding Numeric Inputs
+- pree eezy 
+- i'm done, but i will come back to review soon
