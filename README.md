@@ -1,3 +1,3 @@
-Binding text Inputs
-- so simple but so important
-- I have both the svelte way and the vanilla javascript way (pour refraîchir mon memoir)
+Binding Numeric Inputs
+- pree eezy 
+- i'm done, but i will come back to review soon
