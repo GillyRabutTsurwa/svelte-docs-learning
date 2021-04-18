@@ -1,5 +1,4 @@
 <script>
-  // NOTE: Not started yet
   import { createEventDispatcher } from "svelte";
   const dispatch = createEventDispatcher();
 
