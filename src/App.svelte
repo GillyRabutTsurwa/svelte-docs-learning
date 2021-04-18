@@ -1,14 +1,11 @@
 <script>
-  import Liaison from "./components/Liaison.svelte";
-  let title = "Event Forwarding";
+  import CustomButton from "./components/CustomButton.svelte";
+  let title = "DOM Event Forwarding";
 
-  function handleMessage(e) {
-    console.log(e);
-    const { type, detail } = e;
-    console.log(type);
-    console.log(detail);
-    console.log(detail.text);
+  function clickMessage() {
+    alert("Bouton Clicked");
   }
+
 </script>
 
 <style>
@@ -46,14 +43,16 @@
 <main>
   <h1 id="title">{title}</h1>
   <div class="docs-read">
-    As we've briefly seen already, you can listen to any event on an element
-    with the on: directive:
+    <p>Event forwarding can work on DOM events as well</p>
+    <p>
+      We want to get notified of clicks on our <code>CustomButton</code>. To do this, we just need to froward click events on the button element in CustomButton.svelte
+    </p>
   </div>
 
-  <Liaison on:message={handleMessage} />
+  <CustomButton on:click={clickMessage} />
   <p>
     S'il te faut refraîchir la tête au sujet, consulter ce lien:
-    <a href="https://svelte.dev/tutorial/keyed-each-blocks" target="_blank">
+    <a href="https://svelte.dev/tutorial/dom-event-forwarding" target="_blank">
       Svelte tutorial
     </a>
   </p>
