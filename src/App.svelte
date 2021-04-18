@@ -1,11 +1,13 @@
 <script>
-  import CustomButton from "./components/CustomButton.svelte";
-  let title = "DOM Event Forwarding";
+  let title = "Binding Text Inputs";
+  let  name = "world";
+  let jina = "";
 
-  function clickMessage() {
-    alert("Bouton Clicked");
+  // NOTE: the vanilla javascript way
+  function changeInputVanilla(e) {
+    console.log(e);
+    name = e.target.value;
   }
-
 </script>
 
 <style>
@@ -43,17 +45,33 @@
 <main>
   <h1 id="title">{title}</h1>
   <div class="docs-read">
-    <p>Event forwarding can work on DOM events as well</p>
     <p>
-      We want to get notified of clicks on our <code>CustomButton</code>. To do this, we just need to froward click events on the button element in CustomButton.svelte
+      As a general rule, data flow in Svelte is top down — a parent component can set props on a child component, and a component can set attributes on an element, but not the other way around.
     </p>
+    <p>
+      Sometimes it's useful to break that rule. Take the case of the input element in this component — we could add an on:input event handler that sets the value of name to event.target.value, but it's a bit... boilerplatey. It gets even worse with other form elements, as we'll see.
+    </p>
+    <p>
+      Instead, we can use the bind:value directive:
+    </p>
+    <p>
+      This means that not only will changes to the value of name update the input value, but changes to the input value will update name.
+    </p>         
+  </div>      
+
+  <div class="my-inputs">
+    <input type="text" on:input={changeInputVanilla}>
+    <h3>Hello {name}</h3>
+  
+     <!-- NOTE: the svelte (javascript frameworks) way -->
+    <input type="text" bind:value={jina}>
+    <h3>Hello {jina}</h3> 
   </div>
 
-  <CustomButton on:click={clickMessage} />
   <p>
     S'il te faut refraîchir la tête au sujet, consulter ce lien:
-    <a href="https://svelte.dev/tutorial/dom-event-forwarding" target="_blank">
+    <a href="https://svelte.dev/tutorial/text-inputs" target="_blank">
       Svelte tutorial
-    </a>
+    </a> 
   </p>
-</main>
+</main> 

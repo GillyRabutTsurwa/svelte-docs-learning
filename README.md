@@ -1,3 +1,3 @@
-DOM events. Simple but powerful
-- passing a DOM event app to a parent component. 
-- Ca c'est très idéal pour les custom buttons est des tels éléments
+Binding text Inputs
+- so simple but so important
+- I have both the svelte way and the vanilla javascript way (pour refraîchir mon memoir)
