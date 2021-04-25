@@ -1,9 +1,10 @@
 <script>
-  let title = "Binding"
-  let num1 = 1;
-  let num2 = 2;
+  let title = "Binding";
+  let subtitle = "Checkboxes";
 
-  $: sum = num1 + num2;
+  let oui = false; // variable responsible for changing the state of the checkbox
+  let isChecked = false;
+  let isCheckedTwo = false;
 
 </script>
 
@@ -38,35 +39,70 @@
   :global(.colour-change) {
     color: magenta;
   }
+
+  .square {
+    width: 20em;
+    height: 20em;
+    background-color: magenta;
+    border: 5px solid transparent;
+  }
+
+  .stylesActivated {
+    background-color: goldenrod;
+    border: 5px solid slateblue;
+  }
 </style>
 
 <main>
   <h1 id="title">{title}</h1>
+  <h2>{subtitle}</h2>
   <div class="docs-read">
     <p>
-      In the DOM, everything is a string. That's unhelpful when you're dealing with numeric inputs — type="number" and type="range" — as it means you have to remember to coerce input.value before using it.
+      Checkboxes are used for toggling between states. Instead of binding to <code>input.value</code>, we bind it to <code>input.checked</code>
     </p>
-    <p>
+    <p> 
       With bind:value, Svelte takes care of it for you:
-    </p>       
+    </p>   
+
+    <div class="input-one">
+      <label>
+        <input type="checkbox" bind:checked={oui} >
+      </label>
+    </div>
+    
+    <!-- render this if oui = true (ie) if he checkbox is checked -->
+    {#if oui}
+      <p>Merci. On va remplir ta boîte de reception et vendre tes données personelles</p>
+    {:else}
+      <p>You must opt in to continue. Si vous payez pas, la produit, c'est vous</p> 
+    {/if}
+
+    <button disabled={!oui}>
+      S'abonner
+    </button>
+
+    <div class="input-two">
+      <label for="badInputName">
+        <input type="checkbox" id="badInputName" bind:checked={isChecked}>
+        {#if isChecked}
+          <span>Bossman</span>
+        {:else}
+           <span>BigBoi</span>
+        {/if}
+      </label>
+    </div>
+
+    <div class="input-three">
+      <input type="checkbox" bind:checked={isCheckedTwo}>
+      <!-- we haven't learnt the class directive yet. Ça viens plus tard -->
+      <div class="square" class:stylesActivated={isCheckedTwo}></div>
+    </div>
   </div>      
 
-  <div class="my-inputs">
-    <label>
-      <input type="number" bind:value={num1} min=0 max=20>
-      <input type="range" bind:value={num1} min=0 max=20>
-    </label>
-    <label>
-      <input type="number" bind:value={num2} min=0 max=20>
-      <input type="range" bind:value={num2} min=0 max=20>
-    </label>
-  </div>
-
-  <p> {num1} + {num2} = {sum} </p>
 
   <p>
     S'il te faut refraîchir la tête au sujet, consulter ce lien:
-    <a href="https://svelte.dev/tutorial/text-inputs" target="_blank">
+    <a href="https://svelte.dev/tutorial/checkbox-inputs" target="_blank">
       Svelte tutorial
     </a> 
   </p>
