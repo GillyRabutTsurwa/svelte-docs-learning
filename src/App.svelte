@@ -3,7 +3,6 @@
   let num1 = 1;
   let num2 = 2;
 
-  //NOTE: still need to practise on how to use reactive values
   $: sum = num1 + num2;
 
 </script>
