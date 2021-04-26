@@ -1,9 +1,22 @@
 <script>
   let title = "Binding";
-  let subtitle = "Checkboxes";
-  let oui = false; // variable responsible for changing the state of the checkbox
-  let isChecked = false; // another variable that serves the same purpose
-  let isCheckedTwo = false; // a third variable qui fait le même
+  let subtitle = "Group Inputs";
+
+let scoops = 1;
+// juss like Vue (je crois), this array is the current selected checkbox of all the values in the array below
+let checkedFlavoursArr = [];
+
+let flavoursMenu = ["Cookies & Cream", "Mini Chocolate Chip", "Raspberry Ripple"];
+
+function join(flavoursArr) {
+  if (flavoursArr.length === 1) return flavoursArr[0];
+  return `${flavoursArr.slice(0,-1).join(", ")} and ${flavoursArr[flavoursArr.length - 1]}`;
+}
+
+$: {
+  console.log(checkedFlavoursArr); 
+}
+
 </script>
 
 
@@ -12,6 +25,7 @@
     width: 1000px;
     margin: 0 auto;
   }
+
   h1 {
     color: #ff3e00;
     text-transform: uppercase;
@@ -19,26 +33,31 @@
     font-weight: bold;
     text-align: center;
   }
+
   .code {
     width: 100%;
     height: 80vh;
     border: 2.5px solid #ff3e00;
   }
+
   @media (min-width: 640px) {
     main {
       max-width: none;
     }
   }
+
   /* Mais celui-ci marche bien */
   :global(.colour-change) {
     color: magenta;
   }
+
   .square {
     width: 20em;
     height: 20em;
     background-color: magenta;
     border: 5px solid transparent;
   }
+
   .stylesActivated {
     background-color: goldenrod;
     border: 5px solid slateblue;
@@ -56,40 +75,38 @@
       With bind:value, Svelte takes care of it for you:
     </p>   
 
-    <div class="input-one">
+    <label>
+      <input type="radio" bind:group={scoops} value={1}>
+      One Scoop
+    </label>
+    <label>
+      <input type="radio" bind:group={scoops} value={2}>
+      Two Scoops
+    </label>
+    <label>
+      <input type="radio" bind:group={scoops} value={3}>
+      Three Scoops
+    </label>  
+
+    <p>and just like vue, we can loop through inputs elements to create them more dynamically and efficently</p>
+
+    {#each flavoursMenu as currentFlavour}
       <label>
-        <input type="checkbox" bind:checked={oui} >
+        <input type="checkbox" bind:group={checkedFlavoursArr} value={currentFlavour}>
+        {currentFlavour}
       </label>
-    </div>
-    
-    <!-- render this if oui = true (ie) if he checkbox is checked -->
-    {#if oui}
-      <p>Merci. On va remplir ta boîte de reception et vendre tes données personelles</p>
+    {/each}
+
+    {#if checkedFlavoursArr.length === 0}
+      <p>Please Select at least one flavour</p>
+    {:else if  checkedFlavoursArr.length > scoops}
+       <p>Can't order more flavours than scoops</p>
     {:else}
-      <p>You must opt in to continue. Si vous payez pas, la produit, c'est vous</p> 
-    {/if}
+      <h6>You have {scoops} {scoops === 1 ? "scoop" : "scoops"} of {join(checkedFlavoursArr)}</h6>
+    {/if} 
 
-    <button disabled={!oui}>
-      S'abonner
-    </button>
 
-    <div class="input-two">
-      <label for="badInputName">
-        <input type="checkbox" id="badInputName" bind:checked={isChecked}>
-        {#if isChecked}
-          <span>Bossman</span>
-        {:else}
-           <span>BigBoi</span>
-        {/if}
-      </label>
-    </div>
-
-    <div class="input-three">
-      <input type="checkbox" bind:checked={isCheckedTwo}>
-      <!-- we haven't learnt the class directive yet. Ça viens plus tard -->
-      <div class="square" class:stylesActivated={isCheckedTwo}></div>
-    </div>
-  </div>      
+   
 
 
   <p>
