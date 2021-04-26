@@ -1,10 +1,21 @@
 <script>
-  let title = "Binding"
-  let num1 = 1;
-  let num2 = 2;
+  let title = "Binding";
+  let subtitle = "Group Inputs";
 
-  //NOTE: still need to practise on how to use reactive values
-  $: sum = num1 + num2;
+let scoops = 1;
+// juss like Vue (je crois), this array is the current selected checkbox of all the values in the array below
+let checkedFlavoursArr = [];
+
+let flavoursMenu = ["Cookies & Cream", "Mini Chocolate Chip", "Raspberry Ripple"];
+
+function join(flavoursArr) {
+  if (flavoursArr.length === 1) return flavoursArr[0];
+  return `${flavoursArr.slice(0,-1).join(", ")} and ${flavoursArr[flavoursArr.length - 1]}`;
+}
+
+$: {
+  console.log(checkedFlavoursArr); 
+}
 
 </script>
 
@@ -39,35 +50,68 @@
   :global(.colour-change) {
     color: magenta;
   }
+
+  .square {
+    width: 20em;
+    height: 20em;
+    background-color: magenta;
+    border: 5px solid transparent;
+  }
+
+  .stylesActivated {
+    background-color: goldenrod;
+    border: 5px solid slateblue;
+  }
 </style>
 
 <main>
   <h1 id="title">{title}</h1>
+  <h2>{subtitle}</h2>
   <div class="docs-read">
     <p>
-      In the DOM, everything is a string. That's unhelpful when you're dealing with numeric inputs — type="number" and type="range" — as it means you have to remember to coerce input.value before using it.
+      Checkboxes are used for toggling between states. Instead of binding to <code>input.value</code>, we bind it to <code>input.checked</code>
     </p>
-    <p>
+    <p> 
       With bind:value, Svelte takes care of it for you:
-    </p>       
-  </div>      
+    </p>   
 
-  <div class="my-inputs">
     <label>
-      <input type="number" bind:value={num1} min=0 max=20>
-      <input type="range" bind:value={num1} min=0 max=20>
+      <input type="radio" bind:group={scoops} value={1}>
+      One Scoop
     </label>
     <label>
-      <input type="number" bind:value={num2} min=0 max=20>
-      <input type="range" bind:value={num2} min=0 max=20>
+      <input type="radio" bind:group={scoops} value={2}>
+      Two Scoops
     </label>
-  </div>
+    <label>
+      <input type="radio" bind:group={scoops} value={3}>
+      Three Scoops
+    </label>  
 
-  <p> {num1} + {num2} = {sum} </p>
+    <p>and just like vue, we can loop through inputs elements to create them more dynamically and efficently</p>
+
+    {#each flavoursMenu as currentFlavour}
+      <label>
+        <input type="checkbox" bind:group={checkedFlavoursArr} value={currentFlavour}>
+        {currentFlavour}
+      </label>
+    {/each}
+
+    {#if checkedFlavoursArr.length === 0}
+      <p>Please Select at least one flavour</p>
+    {:else if  checkedFlavoursArr.length > scoops}
+       <p>Can't order more flavours than scoops</p>
+    {:else}
+      <h6>You have {scoops} {scoops === 1 ? "scoop" : "scoops"} of {join(checkedFlavoursArr)}</h6>
+    {/if} 
+
+
+   
+
 
   <p>
     S'il te faut refraîchir la tête au sujet, consulter ce lien:
-    <a href="https://svelte.dev/tutorial/text-inputs" target="_blank">
+    <a href="https://svelte.dev/tutorial/checkbox-inputs" target="_blank">
       Svelte tutorial
     </a> 
   </p>
