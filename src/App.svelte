@@ -1,11 +1,9 @@
 <script>
   let title = "Binding";
   let subtitle = "Checkboxes";
-
   let oui = false; // variable responsible for changing the state of the checkbox
-  let isChecked = false;
-  let isCheckedTwo = false;
-
+  let isChecked = false; // another variable that serves the same purpose
+  let isCheckedTwo = false; // a third variable qui fait le même
 </script>
 
 
@@ -14,7 +12,6 @@
     width: 1000px;
     margin: 0 auto;
   }
-
   h1 {
     color: #ff3e00;
     text-transform: uppercase;
@@ -22,31 +19,26 @@
     font-weight: bold;
     text-align: center;
   }
-
   .code {
     width: 100%;
     height: 80vh;
     border: 2.5px solid #ff3e00;
   }
-
   @media (min-width: 640px) {
     main {
       max-width: none;
     }
   }
-
   /* Mais celui-ci marche bien */
   :global(.colour-change) {
     color: magenta;
   }
-
   .square {
     width: 20em;
     height: 20em;
     background-color: magenta;
     border: 5px solid transparent;
   }
-
   .stylesActivated {
     background-color: goldenrod;
     border: 5px solid slateblue;
